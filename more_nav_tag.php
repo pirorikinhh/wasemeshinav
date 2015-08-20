@@ -80,18 +80,17 @@ if($tag=="文キャン正門"){$tag="南門";}
       if(strcmp($key,$title)==0){continue ;}
     		print '<select name="';
         print $title_s_set[$key];
-        print '" size="">
-    		  <option value="">';
+        print '" size=""> <option value="">';
         print $key;
         print 'を選択</option>';
         foreach($title_set[$key] as $value2){
-    		    print '<option value="';
+    	    print '<option value="';
             print $value2;
             print '">';
             print $value2;
             print '</option>';
         }
-    		print '</select><br/><br/>';
+    	print '</select><br/><br/>';
     }
 ?>
     <input type="hidden" name="title" value="<?php print $title; ?>">
