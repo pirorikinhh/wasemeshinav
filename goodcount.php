@@ -1,4 +1,11 @@
 <?php
+	if (!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) 
+            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')
+        && (!empty($_SERVER['SCRIPT_FILENAME']) 
+            && basename($_SERVER['SCRIPT_FILENAME']) === 'goodcount.php')
+        ) {
+        die();
+    	}
 
 	$id=$_GET['id'];
 
