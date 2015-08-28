@@ -140,19 +140,18 @@
           <div class="panel-body">
     		<div id="more_search">
     		<form action="more_nav_tag.php" method="POST">
-
-    <?php foreach($title_set as $key=>$value):
-          if(strcmp($key,$title)==0){continue;}?>
-        	<select name="<?php print $title_s_set[$key];?>" size="">
-        		  <option value=""><?php print $key;?>を選択</option>
-                 <?php foreach($title_set[$key] as $value2):?>
-        		    <option value="<?php print $value2;?>"><?php print $value2;?></option>
-                 <?php endforeach;?>
-            </select><br/><br/>
-    <?php endforeach;?>
-        <input type="hidden" name="title" value="<?php print $title; ?>">
-        <input type="hidden" name="tag" value="<?php print $tag; ?>">
-    		<input type="submit" name="submit" value="検索"/><br/>
+        <?php foreach($title_set as $key=>$value):
+              if(strcmp($key,$title)==0){continue;}?>
+            	<select name="<?php print $title_s_set[$key];?>" size="">
+            		  <option value=""><?php print $key;?>を選択</option>
+                     <?php foreach($title_set[$key] as $value2):?>
+            		    <option value="<?php print $value2;?>"><?php print $value2;?></option>
+                     <?php endforeach;?>
+                </select><br/><br/>
+        <?php endforeach;?>
+                <input type="hidden" name="title" value="<?php print $title; ?>">
+                <input type="hidden" name="tag" value="<?php print $tag; ?>">
+        		<input type="submit" name="submit" value="検索"/><br/>
     		</form>
     		</div>
           </div>
