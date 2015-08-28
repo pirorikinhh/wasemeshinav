@@ -1,6 +1,4 @@
 <?php
-//session_start();
-
 $title_set=array(
   "メニュー"=>array("らーめん","つけ麺","油そば","うどん","そば","カレー","パスタ","丼","定食","洋食","軽食",
   "ハンバーガー","サンドウィッチ","カフェ飯","デザート","肉","中華料理","アジア料理","韓国料理","海鮮","テイクアウト"),
@@ -23,87 +21,6 @@ $tag=$_POST['tag'];
 if($tag=="文キャン正門"){$tag="南門";}
 
 
-?>
-
-<!DOCTYPE HTML>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
-<title>お店一覧</title>
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-62034440-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-</head>
-<body>
-
-<!--ヘッダーここから-->
-<div class="container">
-  <div class="common-header">
-          <div class="row">
-            <div>
-              <span class="small">早大生のための昼食情報サイト</span>
-              <a href="http://wasemeshi.com/"><h2>ワセメシなび <span class="glyphicon glyphicon-cutlery"></span></h2></a>
-            </div>
-          </div>
-        </div>
-  </div>
-</div>
-<!--ヘッダーここまで-->
-
-<HR>
-
-<div class="panel-group" id="accordion">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          絞り込む<span class="glyphicon glyphicon-chevron-down"></span>
-        </a>
-      </h4>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse">
-      <div class="panel-body">
-		<div id="more_search">
-		<form action="more_nav_tag.php" method="POST">
-
-<?php
-    foreach($title_set as $key=>$value){
-      if(strcmp($key,$title)==0){continue ;}
-    		print '<select name="';
-        print $title_s_set[$key];
-        print '" size=""> <option value="">';
-        print $key;
-        print 'を選択</option>';
-        foreach($title_set[$key] as $value2){
-    	    print '<option value="';
-            print $value2;
-            print '">';
-            print $value2;
-            print '</option>';
-        }
-    	print '</select><br/><br/>';
-    }
-?>
-    <input type="hidden" name="title" value="<?php print $title; ?>">
-    <input type="hidden" name="tag" value="<?php print $tag; ?>">
-		<input type="submit" name="submit" value="検索"/><br/>
-		</form>
-		</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<?php
 include('db_connect.php');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -213,60 +130,103 @@ switch ($title){
       break;
 }
 
-
 //件数表示
 $stmt->execute();
 $resultset = $stmt->fetchAll();
 $resultNum = count($resultset);
-if(0 < $resultNum){
-   print '絞り込みによる「';
-   print $_POST[tag];
-   print '」';
-   print 'があるお店が';
-   print $resultNum;
-   print "件見つかりました。";
-}else{
-   print "見つかりませんでした。";
-}
-
 
 $stmt->execute();
-           print'<table class="table table-striped">';
-	     print'<tbody>';
-foreach($stmt as $row){
-print<<<EOF
-		        <tr>
-		            <td><span class="glyphicon glyphicon-chevron-right"></span></td>
-		            <td><a href="shop_detail.php?id={$row['id']}">{$row['name']}</a><br/><small>{$row['comment']}</small></td>
-		        </tr>
-EOF;
-                       }
-             print'</tbody>';
-	 print'</table>';
-
-
 $pdo = null;
-
 ?>
-<!--検索結果一覧ここまで-->
 
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+<title>お店一覧</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-<!--フッターここから-->
+  ga('create', 'UA-62034440-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="container">
+  <div class="common-header">
+          <div class="row">
+            <div>
+              <span class="small">早大生のための昼食情報サイト</span>
+              <a href="http://wasemeshi.com/"><h2>ワセメシなび <span class="glyphicon glyphicon-cutlery"></span></h2></a>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+
+<HR>
+
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+              絞り込む<span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+          <div class="panel-body">
+    		<div id="more_search">
+    		<form action="more_nav_tag.php" method="POST">
+        <?php foreach($title_set as $key=>$value):
+              if(strcmp($key,$title)==0){continue;}?>
+            	<select name="<?php print $title_s_set[$key];?>" size="">
+            		  <option value=""><?php print $key;?>を選択</option>
+                     <?php foreach($title_set[$key] as $value2):?>
+            		    <option value="<?php print $value2;?>"><?php print $value2;?></option>
+                     <?php endforeach;?>
+                </select><br/><br/>
+        <?php endforeach;?>
+                <input type="hidden" name="title" value="<?php print $title; ?>">
+                <input type="hidden" name="tag" value="<?php print $tag; ?>">
+                <input type="submit" name="submit" value="検索"/><br/>
+    		</form>
+    		</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <div>絞り込みによる「<?php print $_POST[tag]; ?>」があるお店が<?php print $resultNum;?>件見つかりました</div>
+
+    <table class="table table-striped">
+        <tbody>
+                <?php foreach($stmt as $row):?>
+          <tr>
+              <td><span class="glyphicon glyphicon-chevron-right"></span></td>
+              <td><a href="shop_detail.php?id=<?php print $row['id'];?>"><?php print $row['name'];?></a><br/><small><?php print $row['comment'];?></small></td>
+          </tr>
+                <?php endforeach;?>
+        </tbody>
+    </table>
+
      <div id="footer">
-
-     <ul class="breadcrumb" style="margin-bottom: 5px;">
-       <li class="active"><a href="http://www.wasemeshi.com">Home</a></li>
-       <li><a href="http://www.wasemeshi.com/aboutus.html">Profile</a></li>
-       <li ><a href="http://www.wasemeshi.com/contact.html">contact</a></li>
-       <li><a href="http://www.wasemeshi.com/blog_list.php">みにれぽ</a></li>
-     </ul>
-<br/>
-      Copyrightc <a href="http://www.wasemeshi.com">ワセメシなび</a>, All rights reserved.<br>
-
+         <ul class="breadcrumb" style="margin-bottom: 5px;">
+           <li class="active"><a href="http://www.wasemeshi.com">Home</a></li>
+           <li><a href="http://www.wasemeshi.com/aboutus.html">Profile</a></li>
+           <li ><a href="http://www.wasemeshi.com/contact.html">contact</a></li>
+           <li><a href="http://www.wasemeshi.com/blog_list.php">みにれぽ</a></li>
+         </ul><br/>
+          Copyrightc <a href="http://www.wasemeshi.com">ワセメシなび</a>, All rights reserved.<br>
      </div>
-<!--フッターここまで-->
-
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
