@@ -166,7 +166,7 @@
         <?php foreach($stmt as $row):?>
             <tr>
                 <td><span class="glyphicon glyphicon-chevron-right"></span></td>
-                <td><a href="shop_detail.php?id={$row['id']}"><?php print $row['name']; ?></a><br/><small><?php print $row['comment'];?></small></td>
+                <td><a href="shop_detail.php?id=<?php print $row['id'];?>"><?php print $row['name']; ?></a><br/><small><?php print $row['comment'];?></small></td>
             </tr>
         <?php endforeach;?>
         </tbody>
